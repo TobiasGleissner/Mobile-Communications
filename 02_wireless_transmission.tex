@@ -30,24 +30,89 @@ Man hat im Funk ja nur ein gewisses Frequenzband zur Verfügung. Ein digitales S
 
 %2.7
 \subsection{Is a directional antenna useful for mobile phones? Why? How can the gain of an
-antenna be improved?}
+antenna be improved?} 
+Nein, also nicht direkt am Handy bzw. am UE/MS. Man weiß ja nicht in welcher Richtung sich die gerade verbundene Base Station befindet. Es sollte also in alle Richtungen gleichmäßig gesendet werden. Zumal die Zelle ja auch regelmäßig durch die implizierte Mobilität gewechselt wird.
 
 %2.8
 \subsection{What are the main problems of signal propagation? Why do radio waves not always
 follow a straight line? Why is reflection both useful and harmful?}
+\begin{itemize}
+
+\item Fading: Frequenzabhängig, Umwelt beeinflusst das Signal indem es die Wellenlänge vergrößert oder verringert
+
+\item Shadowing: Abschirmung bestimmter Frequenzen durch Materialien wie Stahlbetonwände, Bäume, Wasser. Je höher die Frequenz, desto stärker treten shadowing-Effekte auf.
+
+\item Reflection: Reflektion von Signalen an Wänden, etc. Besonders stark in Innenstädten mit engen Gassen
+
+\item Refraction: Wie beim Licht im Wasser. Ablenkung des Signals durch ein Medium
+
+\item Scatter: Brechung des Signals wie beim Licht und einem Prisma. Spaltet Signal in seine Frequenzbestandteile auf.
+
+\item Diffraction an Kanten. Ablenkung + Aufspaltung des Signals.
+
+\end{itemize}
+
+Frage 2 ergibt sich aus obigen Problemen. Signale haben selten freie Bahn, sondern kollidieren mit Objekten und werden abgelenkt.
+Reflektion hilft dabei schlecht erreichbare Ecken in z.B. Innenstädten abzudecken, ohne zusätzliche Antennen aufstellen zu müssen. Allerdings lenkt sie auch das Signal ab, was dazu führt, das gesendete Signale nicht dort ankommen wo sie hin sollen oder zu spät und in schlechter Qualität am Empfänger eintreffen.
 
 %2.9
 \subsection{Name several methods for ISI mitigation. How does ISI depend on the carrier
 frequency, symbol rate, and movement of sender/receiver? What are the influences
 of ISI on TDM schemes?}
 
+\begin{itemize}
+
+\item Kürzere Impulse nutzen, sodass möglichst wenig Energie sich auf die benachbarten Symbole auswirken kann
+
+\item Zeitliche Trennung von Symbolen durch guard-periods. 
+
+\item Equalizer im Receiver, der versucht die Effekte rückgängig zu machen
+
+\item Sequence Detector im Receiver um mithilfe des Viterbi Algorithmus die übertragene Symbolfrequenz zu schätzen.
+
+\end{itemize}
+Quelle: https://en.wikipedia.org/wiki/Intersymbol_interference#Countering_ISI
+
+Carrier Frequenz hoch -> stärkere Interferenzen, weil die Impulse näher beieinander liegen
+
+Symbol Rate hoch -> mehr Symbole pro Impuls -> "schöneres" Signal notwendig zum decodieren -> mehr Interferenzen und kaputte Signale
+
+Bewegungen von Sender und Empfänger führen zu unterschiedlichen Übertragungszeiten der einzelnen Signale. Gerade wenn diese Bewegungen sehr schnell sind, treffen Signale eventuell zu einem unerwarteten Zeitpunkt ein (auch zugleich) und stören sich.
+
+ISI bedeutet auch, dass eventuell die Signale unterschiedlicher Time Slots miteinander interferieren und somit Signale an einer Stelle erscheinen, wo sie nichts zu suchen haben. Behoben durch guard spaces zwischen den Time Slots.
+
+
 %2.10
 \subsection{What are the means to mitigate narrowband interference? What is the complexity of
 the different solutions?}
+Spread Spectrum.
+
+Direct Sequence Spread Spectrum -> XOR von Signal mit einer random-Number (der sog. Chipping-Sequence). Je mehr Chips pro Bit, desto breiter das Signal
+
+
+Frequency Hopping Spread Spectrum -> Sprunghaftes ändern der Trägerfrequenz (Bluetooth)
+Fast Hopping: mehrere Frequenzen per Bit, Slow Hopping: mehrere Bits per Frequenz
+
+FHSS ist deutlich einfacher zu implementieren, da einfach in einem gewissen Takt gesprungen werden muss. Bei DSSS muss hingegen bei Sender und Empfänger das Signal umgerechnet werden was Prozessorleistung erfordert.
 
 %2.11
 \subsection{Why, typically, is digital modulation not enough for radio transmission? What are
 general goals for digital modulation? What are typical schemes?}
+Sender unterschiedlicher Dienste (z.B. Zellen, Radiosender) haben bestimmte zugewiesene  
+Frequenzbänder in denen sie sich bewegen können ohne andere Sendestationen zu stören. Deshalb muss das Signal mit den Nutzdaten noch auf die genutzte Trägerfrequenz moduliert werden.
+
+Ziele von digitaler Modulation sind spektrale Effizienz (bin mir unsicher was das sein soll), Stromsparen und robuste Signale.
+
+Digitale Modulation nennt sich auch Shift Keying
+\begin{itemize}
+
+\item Amplitude Shift Keying: Verändere Ausschlag der Welle passend zum zu übertragenden Bit
+
+\item Frequency Shift Keying: Ändere Frequenz passend zu 0 oder 1
+
+\item Phase Shift Keying: Verschiebe die Phase des Signals abhängig vom Bit-wert.
+
+\end{itemize}
 
 %2.12
 \subsection{Think of a phase diagram and the points representing bit patterns for a PSK scheme
