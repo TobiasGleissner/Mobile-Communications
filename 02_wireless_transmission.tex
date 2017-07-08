@@ -119,22 +119,43 @@ Digitale Modulation nennt sich auch Shift Keying
 (see Figure 2.29). How can a receiver decide which bit pattern was originally sent
 when a received ‘point’ lies somewhere in between other points in the diagram? Why
 is it, thus, difficult to code more and more bits per phase shift?}
+Wir nehmen den Punkt, der am nächsten liegt? Und wenn komplett Zentral raten? Also random. Ich bin mir da unsicher...
+
+Wenn man viele Bits per Phase verwendet, resultiert das in mehr Punkten in unserer Map. Dadurch sind die Bereiche in denen ein Bit eindeutig einem Wert zugeordnet werden kann kleiner und das Signal ist weniger robust.
+
 
 %2.13
 \subsection{What are the main benefits of a spread spectrum system? How can spreading be
 achieved? What replaces the guard space in Figure 2.31 when compared to Figure
 2.32? How can DSSS systems benefit from multipath propagation?}
+Störungen, die nur einen kleinen Frequenzbereich betreffen stellen kein Problem mehr dar, da das Signal sich über einen größeren Bereich erstreckt. Das Signal wird also robuster. Weiterhin ist mit einer geheimen und wechselnden Chipping Sequence eine Verschlüsselung zu erzielen. Nutzer können auch auf dem selben Frequenzband gleichzeitig senden, wenn sie unterschiedliche Codes zum spreaden nutzen.
+
+Wie funktioniert Spreading siehe oben
+
+Ich bin mir unsicher welche guard spaces da gemeint sind. Vielleicht wurden die Folien geändert?
+
+Offensichtlich nutzen DSSS Systeme sog. rake receivers (?). Dadurch können sie leicht verschiedene Signale einfangen und zum Ausgangssignal rekombinieren.
+
 
 %2.14
 \subsection{What are the main reasons for using cellular systems? How is SDM typically realized
 and combined with FDM? How does DCA influence the frequencies available in other
 cells?}
+Mehr Nutzer möglich, weniger Strom für die Übertragung notwendig wegen kürzerer Wege, dezentral daher robuster.
+
+Jede Zelle deckt einen bestimmten Bereich ab. Alle Nutzer in diesem Bereich nutzen die Basisstation dieser Zelle(SDM).
+Jede Zelle hat ein bestimmtes Frequenzband, welches disjunkt zum Frequenzband benachbarter Zellen ist(FDM). 
+
+Wenn eine Zelle viele Nutzer hat, "stiehlt" sie den benachbarten Zellen dynamisch unbenutzte Frequenzen.
 
 %2.15
 \subsection{What limits the number of simultaneous users in a TDM/FDM system compared to a
 CDM system? What happens to the transmission quality of connections if the load
 gets higher in a cell, i.e., how does an additional user influence the other users in the
 cell?}
+TDM/FDM ist irgendwann voll belegt und lehnt dann einfach neue Nutzer ab, weil die verfügbaren Frequenzen bzw. die Timeslots aufgebraucht sind.
+
+CDM kann neue Nutze aufnehmen, solange diese sich nicht gegenseitig auslöschen. Je mehr Nutzer in einer Zelle mit CDM, desto stärker das Rauschen -> geringere Reichweite der Basisstation -> irgendwann fallen entferntere Nutzer aus der Zelle.
 
 
 
