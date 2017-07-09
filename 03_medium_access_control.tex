@@ -28,7 +28,7 @@ Exposed: B möchte etwas zu A senden, C irgendwo anders hin (zu D). C empfängt 
 %3.3 
 \subsection{How does the near/far effect influence TDMA systems? What happens in CDMA
 systems? What are countermeasures in TDMA systems, what about CDMA systems?}
-TDMA gar nicht? Also ich wüsste nicht weshalb. Jedes Terminal hat seinen Zeitslot und sendet da auf seiner Frequenz.
+TDMA gar nicht? Also ich wüsste nicht weshalb. Jedes Terminal hat seinen Zeitslot und sendet da auf seiner Frequenz. Es muss nur, je nach Entfernung zwischen Sender und Empfänger, der Sendezeitpunkt angepasst werden sodass das Signal im richtigen Time slot eintrifft.
 
 Bei CDMA kann ein weiter entferntes Terminal von einem Näheren übertönt werden. Eine Gegenmaßnahme wäre die Signalstärke anzupassen, wenn keine ACKs vom Receiver kommen bzw. vielleicht den näheren Terminals zu signalisieren schwächer zu senden. Also entfernungsabhängiges power-management.
 
@@ -45,12 +45,16 @@ Die MS suchen sich über die Signalstärke die nächstgelegene BS und tauschen s
 \subsection{What is the basic prerequisite for applying FDMA? How does this factor increase
 complexity compared to TDMA systems? How is MAC distributed if we consider the
 whole frequency space as presented in chapter 1?}
+Wir müssen in der Lage sein unser digitales Signal auf eine bestimmte Trägerfrequenz zu modulieren. Also benötigen Sender und Empfänger analoge Modulatoren(nennt man das so?).
+Während in TDMA Systemen einfach nur synchronisiert auf immer der gleichen Frequenz gesendet wird - also vom Empfänger auch nur eine Frequenz "abgehört" werden muss - muss der Empfänger bei FDMA Systemen mehrere Frequenzen gleichzeitig handeln. Die Kommunikation geschieht also parallel und nicht sequentiell wie beim TDMA.
 
 
 %3.6 
 \subsection{Considering duplex channels, what are alternatives for implementation in wireless
 networks? What about typical wired networks?}
 FDD, also eine Menge an Frequenzen für den Uplink und eine Menge für den Downlink oder TDD als in einer bestimmten Zeit wird gesendet und in der Restlichen empfangen.
+CDD mit unterschiedlichen Codes für Uplink und Downlink?
+Verkabelte Netzwerke nutzen gewöhnlich einfach unterschiedliche Leitungen/Kabelstränge.
 
 %3.7
 \subsection{What are the advantages of a fixed TDM pattern compared to random, demand
@@ -59,30 +63,49 @@ data rates or in the case of varying data rates. Now explain why traditional mob
 phone systems use fixed patterns, while computer networks generally use random
 patterns. In the future, the main data being transmitted will be computer-generated
 data. How will this fact change mobile phone systems?}
+Fairness, einfach zu implementieren. Feste Timeslots sind effektiver bei festen Datenraten, da weniger Overhead entsteht und keine Kapazität für die Reservierung von Time Slots verbraucht wird. Bei wechselnden Datenraten ist logischerweise DAMA-TDMA effektiver, da jede Station hier nur so viel Kapazität belegt wie sie braucht. Wenn bei fixed TDMA bspw. eine Station zeitweise nur wenig bis gar keine Daten sendet, werden ihre Time Slots verschwendet.
+
 
 %3.8 
 \subsection{Explain the term interference in the space, time, frequency, and code domain. What
 are countermeasures in SDMA, TDMA, FDMA, and CDMA systems?}
+\begin{itemize}
+
+\item SDMA: Zwei Sender stehen zu nah beieinander. Guard space durch genügende Abstände zwischen den Antennen. 
+
+\item TDMA: das Signal einer Station kommt im falschen Slot an und trifft auf das Signal einer anderen Station. Guard Spaces in Form von Sendepausen zwischen den Slots, bessere Synchronisation.
+
+\item FDMA: die Frequenzbänder von Stationen überlappen. Guard Spaces in Form von ungenutzten Frequenzen bzw. Frequency Reuse erst ab einer gewissen Entfernung bei Zellen, Frequency Hopping
+
+\item CDMA: Codes canceln sich gegenseitig. Orthogonale Codes nutzen
+
+\end{itemize}
 
 %3.9 
 \subsection{Assume all stations can hear all other stations. One station wants to transmit and
 senses the carrier idle. Why can a collision still occur after the start of transmission?}
+Geschwindigkeit des Signals in der Luft begrenzt. Station beginnt also zu senden, doch bevor das Signal eine andere Station erreichen kann, checkt eine weitere Station das Medium, erkennt es als frei und sendet.
 
 %3.10 
 \subsection{What are benefits of reservation schemes? How are collisions avoided during data
 transmission, why is the probability of collisions lower compared to classical Aloha?
 What are disadvantages of reservation schemes?}
+Vorteile der Reservierung ist ein größtenteils Kollisionsfreier Datenaustausch. Durch die Reservierung kann eine Station je nach bedarf auch mehr Daten senden oder eben weniger. Es werden keine unnötigen Ressourcen wie Time Slots, Codes oder Frequenzen blockiert. Die ALOHA Phase in der wild gesendet wird ist vergleichsweise kurz. 
+
+Ein Nachteil der Reservierung ist der zusätzliche Overhead (Reservation Lists up to date halten etc.)
 
 %3.11 
 \subsection{How can MACA still fail in case of hidden/exposed terminals? Think of mobile stations
 and changing transmission characteristics.}
 
+
 %3.12 
 \subsection{Which of the MAC schemes can give hard guarantees related to bandwidth and
-access delay?}
+access delay?} TDMA mit festen Slots und FDMA
 
 %3.13 
 \subsection{How are guard spaces realised between users in CDMA?}
+Orthogonale Codes, quasi-orthogonale Codes.
 
 %3.14 
 \subsection{Redo the simple CDMA example of subsection 3.5, but now add random ‘noise’ to the
@@ -90,3 +113,11 @@ transmitted signal $(–2,0,0,–2,+2,0)$. Add, for example, $(1,–1,0,1,0,–1
 what can the receiver detect for sender A and B respectively? Now include the
 near/far problem. How does this complicate the situation? What would be possible
 countermeasures?}
+
+Signal + noise = -1,-1,0,-1,+2,-1
+
+A beim Empfänger: +1-1+0+1+2-1 = 2 also 1
+
+B beim Empfänger: -1-1+0-1-2-1 = -6 also 0
+
+Der Empfänger kann die Signale trotz des Noise decodieren. Bei einem zusätzlichen Near-Far Problem könnte bspw. das Signal von A und das Noise deutlich heftiger ausfallen, sodass das decodieren der Bits nicht mehr möglich ist. Um dies zu beheben könnten z.B. längere Keys für A und B verwendet werden.
