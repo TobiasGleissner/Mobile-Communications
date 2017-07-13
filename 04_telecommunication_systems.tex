@@ -206,38 +206,66 @@ Keine Ende-zu-Ende Verschlüsselung
 
 %4.19
 \subsection{How can higher data rates be achieved in standard GSM, how is this possible with the additional schemes HSCSD, GPRS, EDGE? What are the main differences of the approaches, also in terms of complexity? What problems remain even if the data rate is increased?}
+Klassisches GSM is 9.6 kbit/s, 14.4 kbit/s mit weniger FEC
+
+HSCSD nutzt mehrere Slots um die Datenrate zu erhöhen.
+
+GPRS nutzt bis zu 8 time-slots und bietet 4 verschiedene Coding Schemes (CS-1 bis CS-4)
+
+EDGE nutzt eine andere Modulation(PSK) in addition to GMSK, which offers even higher data rates under good propagation conditions. 
+
 
 %4.20
 \subsection{What limits the data rates that can be achieved with GPRS and HSCSD using real devices (compared to the theoretical limit in a GSM system)?}
+Alte Handy können die Codes von GPRS nicht und können nicht senden und empfangen zugleich.
 
 %4.21
 \subsection{Using the best delay class in GPRS and a data rate of 115.2 kbit/s – how many bytes are in transit before a first acknowledgement from the receiver could reach the sender (neglect further delays in the fixed network and receiver system)? Now think of typical web transfer with 10 kbyte average transmission size—how would a standard TCP behave on top of GPRS (see chapter 9 and chapter 10)? Think of congestion avoidance and its relation to the round-trip time. What changes are needed?}
 
 %4.22
 \subsection{How much of the original GSM network does GPRS need? Which elements of the network perform the data transfer?}
+GPRS nutzt das GSM-Netz für die Authentifizierung, benötigt also das OSS und die LRs. 
 
 %4.23
 \subsection{What are typical data rates in DECT? How are they achieved considering the TDMA frames? What multiplexing schemes are applied in DECT for what purposes? Compare the complexity of DECT with that of GSM.}
 
 %4.24
 \subsection{Who would be the typical users of a trunked radio system? What makes trunked radio systems particularly attractive for these user groups? What are the main differences to existing systems for that purpose? Why are trunked radio systems cheaper compared to, e.g., GSM systems for their main purposes?}
+Feuerwehr, Polizei, Militär, Hilfsorganisationen in Krisengebieten.
+
+Ad-Hoc networking, verlässliche/robuste Verbindung. Es kann in eine Krisengebiet schnell das eigene Netz aufgestellt werden. Die Verschlüsselung (ende zu ende)ist besser, also bessere Sicherheit. 
+
+Der größte Unterschied von TETRA zu GSM oder ähnlichem ist der Direct Mode, der eine ad-hoc Verbindung zwischen den Terminals erlaubt. Es muss also keine Infrastruktur vorhanden sein, solange die Geräte in Reichweite sind. Diese kann auch durch den Einsatz von (mobilen) Repeatern vergrößert werden.
 
 %4.25
 \subsection{Summarise the main features of 3rd generation mobile phone systems. How do they achieve higher capacities and higher data rates? How does UMTS implement asymmetrical communication and different data rates?}
+Nutzen CDMA statt TDMA, sehr viel höhere Datenraten (bis zu 2 Mbit/s urban) und sind packet-switched.
+
+Höhere Kapazitäten durch CDMA, da hier alle Nutzer auf einer Frequenz senden können und nur durch die verschiedenen Codes auseinander gehalten werden. 
+
+Verschiedene Datenraten durch variierende Spreading-Faktoren. Je höher die Datenrate desto weniger Chips pro Bit. Dadurch wird eine konstante Chippingrate von 3.84 Mchip/s gewährleistet. 
 
 %4.26
 \subsection{Compare the current situation of mobile phone networks in Europe, Japan, China, and North America. What are the main differences, what are efforts to find a common system or at least interoperable systems?}
 
 %4.27
 \subsection{What disadvantage does OVSF have with respect to flexible data rates? How does UMTS offer different data rates (distinguish between FDD and TDD mode)?}
+Es können weniger Streams mit hohen Datenraten laufen, da schon bei zwei Streams mit Spreading-Faktor 2 der gesamte Coding-Tree blockiert ist.
 
 %4.28
 \subsection{How are different DPDCHs from different UEs within one cell distinguished in UTRA FDD?}
 
 %4.29
 \subsection{Which components can perform combining/splitting at what handover situation? What is the role of the interface Iur? Why can CDMA systems offer soft handover?}
+Combining/Splitting ist Aufgabe der RNCs oder Node Bs, damit das CN nicht davon verwirrt wird.
 
+Findet der Handover zwischen zwei Antennen des selben Node Bs oder zwischen zwei NodeBs desselben RNCs statt sind die NodeBs für das Splitting/Combining zuständig. Sonst die RNCs.
+
+Iur wird für die Kommunikation zwischen den RNCs genutzt.
+
+Der soft HO wird dadurch möglich, weil wenn das Signal an einer Stelle zu schwach wird, der Pfad einfach nicht mehr genutzt wird. Es stehen ohnehin noch weitere Wege zu Verfügung, die dann stattdessen benutzt werden.
 %4.30
 \subsection{How does UTRA-FDD counteract the near-far effect? Why is this no problem in GSM?}
+Die Stations müssen ihre Sendestärke ständig anpassen (ein generelles Problem bei CMDA Systemen) um zu verhindern das Stationen übertönt werden. Dieses Problem tritt bei GSM nicht auf, da es TDMA nutzt und somit nie zwei Stationen auf der selben Frequenz im selben Time Slot senden (sollten) und sich somit auch nicht übertönen können.
 
 
