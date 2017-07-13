@@ -144,22 +144,65 @@ Bei HSCSD kann es zusätzlich noch zu Problemen beim Handover kommen, wenn auf d
 \begin{itemize}
 \item RACH (Random Access Channel) wird für Zugriffsanfragen und location Updates genutzt
 
-\
+\item TCH (Traffic Channel)
+
 \end{itemize}
 
 %4.15
 \subsection{How is localisation, location update, roaming, etc. done in GSM and reflected in the data bases? What are typical roaming scenarios?}
+Lokalisierung ist nur dann möglich, wenn sich der Teilnehmer regelmäßig mit seiner MS im Netz einbucht. Sobald er dies tut, wird das verantwortliche VLR informiert und der Nutzer wird dort eingetragen. Das HLR des Teilnehmers wird über den neuen Standort in Kenntnis gesetzt (Location update).
 
+
+Location Update Ablauf:
+
+\begin{itemize}
+\item MS bemerkt, dass seine neue Zelle sich in einer anderen Location Area gehört.
+\item Der BSC empfängt eine Location Update Message von der MS und leitet diese weiter zum MSC.
+\item MSC bemerkt, dass die alte LA der MS zu einem anderen MSC gehört und fragt das alte VLR nach der IMSI des Teilnehmers und trägt diese in ihre Datenbank ein.
+\item Das MSC sendet eine Update Location Message an das HLR des Teilnehmers. 
+\item HLR trägt den neuen Aufenthaltsort des Teilnehmers ein und sendet dem neuen MSC Informationen über den Teilnehmer, wie den zugehörigen Key, random Challenge und die SRES für die Verschlüsselung und Authentifizierung.
+\item Die alte MSC löscht die Daten im VLR.
+\item Authentifizierung des Nutzers
+\end{itemize} 
+
+
+Roaming geschieht durch Nachfrage beim HLR des Teilnehmers. Das HLR schaut nach, wo der Teilnehmer zuletzt gesichtet wurde und fragt das zuständige VLR ob sich der Teilnehmer noch dort aufhält und erhält bei Erfolg die MSRN (Mobile Subscriber Roaming Number) welche eine ISDN Nummer im jeweiligen Gebiet ist, mit welcher der Nutzer erreicht werden kann. 
+
+National roaming, international roaming. Beides Wechsel des Provider Netzes.
 
 
 %4.16
 \subsection{Why are so many different identifiers/addresses (e.g., MSISDN, TMSI, IMSI) needed in GSM? Give reasons and distinguish between user related and system related identifiers.}
+\begin{itemize}
+\item MSISDN ist die Nummer, die einer SIM-Karte zugeordnet wird und die man auf seinem Handy wählt um einen Nutzer zu erreichen. Über diese Nummer wird der Teilnehmer einem HLR, bzw. einem Provider zugeordnet.
+
+\item TMSI (Temporary Mobile Subscriber Identity) erhält die MS vom aktuellen VLR und gilt nur in der aktuellen LA. Sie wird genutzt um einen Nutzer "anzu-pagen", wenn dieser angerufen wird.
+
+\item IMSI ist die globale Identifikationsnummer über die der Teilnehmer im Netz einer HLR zugeordnet und kann so im HLR gefunden werden. Um tracking eines Nutzers zu erschweren wird diese Nummer möglichst selten versendet und meist durch die TMSI ersetzt.
+
+\end{itemize}
+
 
 %4.17
 \subsection{Give reasons for a handover in GSM and the problems associated with it. Which are the typical steps for handover, what types of handover can occur? Which resources need to be allocated during handover for data transmission using HSCSD or GPRS respectively? What about QoS guarantees?}
+Wir bewegen uns von unserer aktuellen Antenne weg und hin zu einer anderen. Dadurch wird das Signal der alten BTS immer schwächer und das der Neuen immer stärker.
+
+
+Probleme ergeben sich, wenn ein Nutzer mehrere BTS gleich stark empfängt und somit ständig HO notwendig werden und dadurch die Verbind sehr schlecht wird. Dies wird dadurch verhindert, dass ein HO nur dann eingeleitet wird, sobald eine Gewisse Grenze der Signalstärke erreicht ist.
+
+
+Handover Steps see figure 4.45
+
+
+Types of HO: Channel change, BTS change, BSC change, MSC change
 
 %4.18
 \subsection{What are the functions of authentication and encryption in GSM? How is system security maintained?}
+Authentifizierung erfolgt zwischen der SIM und dem AC. Hierbei wird zunächst eine Zufallsnummer vom AC an die SIM gesendet. Beide Seiten führen nun den Algorithmus A3 mit dieser Nummer und dem individuellen Teilnehmer Key aus und senden das Ergebnis in Form einer SRES Nachricht an das verbundene MSC. Hier werden die Ergebnisse verglichen. Stimme diese überein, war die Authentifizierung erfolgreich.
+
+Verschlüsselung läuft ähnlich ab. Auch hier wird eine Zufallsnummer ausgetauscht und aus ihr und dem Teilnehmer Key mit dem A8 Algorithmus der cipher Key errechnet und vom AC an die BSS gesendet. Diese verschlüsselt dann die Nutzerdaten mit diesem Key und dem Algorithmus A5. Die Mobile Station tut das selbe auf der anderen Seite mit dem Key der von der SIM errechnet wurde.
+
+Keine Ende-zu-Ende Verschlüsselung 
 
 %4.19
 \subsection{How can higher data rates be achieved in standard GSM, how is this possible with the additional schemes HSCSD, GPRS, EDGE? What are the main differences of the approaches, also in terms of complexity? What problems remain even if the data rate is increased?}
