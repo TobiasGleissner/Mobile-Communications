@@ -3,7 +3,7 @@
 %3.1 
 \subsection{What is the main physical reason for the failure of many MAC schemes known from
 wired networks? What is done in wired networks to avoid this effect?}
-Signalstärke -> hidden Terminals
+Signalstärke $\rightarrow$ hidden Terminals
 
 
 %3.2 
@@ -11,49 +11,49 @@ Signalstärke -> hidden Terminals
 such terminals if Aloha, slotted Aloha, reservation Aloha, or MACA is used?}
 \begin{itemize}
 
-\item Aloha: Hidden: Terminals A und C senden einfach fröhlich drauflos -> Kollision -> Kein ACK von B -> neue Übertragung bis die Daten irgendwann ankommen
+\item Aloha: Hidden: Terminals A und C senden einfach fröhlich drauflos $\rightarrow$ Kollision $\rightarrow$ Kein ACK von B $\rightarrow$ neue Übertragung bis die Daten irgendwann ankommen
 
 Exposed: Es wird einfach gesendet und damit auch keine Rücksicht auf irgendwelche belegten Medien genommen
 
-\item slotted Aloha: s.o. Vielleicht Probleme beim Synchronisieren der Time Slots? Wobei das dann vermutlich einfach über das Terminal B laufen würde.
+\item Slotted Aloha: Wie Aloha, nur nicht ganz so schlimm, weil nicht mehr beliebige Schnitte der Zeitintervalle zustandenkommen sondern nur noch solche, die auf je einen Zeitslot begrenzt sind.
 
-\item reservation Aloha: Synchronisation und Reservierung über Terminal B? 
+\item Reservation Aloha: Reservierung wie bei Slotted Aloha, bei Datenübertragung gibt es keine Probleme, weil alle Terminals ihre Slots zugewiesen bekommen.
 
-\item MACA: Hidden: A sendet RTS -> B sendet CTS -> C empfängt CTS von B und wartet deshalb
+\item MACA: Hidden: A sendet RTS $\rightarrow$ B sendet CTS $\rightarrow$ C empfängt CTS von B und wartet deshalb
 
-Exposed: B möchte etwas zu A senden, C irgendwo anders hin (zu D). C empfängt kein CTS von A, da A nicht sichtbar und muss deshalb nicht warten
+Exposed: B möchte etwas zu A senden, C zu D. C empfängt kein CTS von A, da A nicht sichtbar und muss deshalb nicht warten.
 
 \end{itemize}
 
 %3.3 
 \subsection{How does the near/far effect influence TDMA systems? What happens in CDMA
 systems? What are countermeasures in TDMA systems, what about CDMA systems?}
-TDMA gar nicht? Also ich wüsste nicht weshalb. Jedes Terminal hat seinen Zeitslot und sendet da auf seiner Frequenz. Es muss nur, je nach Entfernung zwischen Sender und Empfänger, der Sendezeitpunkt angepasst werden sodass das Signal im richtigen Time slot eintrifft.
+Jedes Terminal hat seinen Zeitslot und sendet da auf seiner Frequenz. Es muss nur, je nach Entfernung zwischen Sender und Empfänger, der Sendezeitpunkt angepasst werden sodass das Signal im richtigen Timeslot eintrifft (Time Advanced Field bei GSM).
 
-Bei CDMA kann ein weiter entferntes Terminal von einem Näheren übertönt werden. Eine Gegenmaßnahme wäre die Signalstärke anzupassen, wenn keine ACKs vom Receiver kommen bzw. vielleicht den näheren Terminals zu signalisieren schwächer zu senden. Also entfernungsabhängiges power-management.
+Bei CDMA kann ein weiter entferntes User Equipment (UE) von einem Näheren übertönt werden. Eine Gegenmaßnahme wäre die Signalstärke anzupassen, wenn keine ACKs vom Receiver kommen bzw. vielleicht den näheren Terminals zu signalisieren schwächer zu senden. Also entfernungsabhängiges power-management.
 
 
 %3.4 
 \subsection{Who performs the MAC algorithm for SDMA? What could be possible roles of mobile
 stations, base stations, and planning from the network provider?}
 
-Der Provider legt die Zellstrukturen fest, also die Netztopologie. Also ist der Provider derjenige, der für den SDMA zuständig ist.
+Der Provider legt die Zellstrukturen fest, also die Netztopologie. Also ist der Provider derjenige, der für den SDMA zuständig ist. Staaten legen die Rahmenbedingungen fest, die der Provider dabei einzuhalten hat, z.B. welche Frequenzen benutzt werden dürfen oder wo es Netzabdeckung geben muss.
 
-Die MS suchen sich über die Signalstärke die nächstgelegene BS und tauschen sich mit dieser aus. 
+Die MS suchen sich über die Signalstärke die nächstgelegene BS und tauschen sich mit dieser aus. Dort wo es viele MS gibt sollte es auch viele BS geben.
 
 %3.5 
 \subsection{What is the basic prerequisite for applying FDMA? How does this factor increase
 complexity compared to TDMA systems? How is MAC distributed if we consider the
 whole frequency space as presented in chapter 1?}
-Wir müssen in der Lage sein unser digitales Signal auf eine bestimmte Trägerfrequenz zu modulieren. Also benötigen Sender und Empfänger analoge Modulatoren(nennt man das so?).
-Während in TDMA Systemen einfach nur synchronisiert auf immer der gleichen Frequenz gesendet wird - also vom Empfänger auch nur eine Frequenz "abgehört" werden muss - muss der Empfänger bei FDMA Systemen mehrere Frequenzen gleichzeitig handeln. Die Kommunikation geschieht also parallel und nicht sequentiell wie beim TDMA.
+Wir müssen in der Lage sein unser digitales Signal auf eine bestimmte Trägerfrequenz zu modulieren. Also benötigen Sender und Empfänger analoge Signalprozessoren, die das hergeben.
+Während in TDMA Systemen einfach nur synchronisiert auf immer der gleichen Frequenz gesendet wird - also vom Empfänger auch nur eine Frequenz \"abgehört\" werden muss - muss der Empfänger bei FDMA Systemen mehrere Frequenzen gleichzeitig handeln. Die Kommunikation geschieht also parallel und nicht sequentiell wie beim TDMA. \todo{Man kanna auch auf nur einer Frequenz Nachrichten empfangen und hat auch FDMA}
 
 
 %3.6 
 \subsection{Considering duplex channels, what are alternatives for implementation in wireless
 networks? What about typical wired networks?}
 FDD, also eine Menge an Frequenzen für den Uplink und eine Menge für den Downlink oder TDD als in einer bestimmten Zeit wird gesendet und in der Restlichen empfangen.
-CDD mit unterschiedlichen Codes für Uplink und Downlink?
+CDD mit unterschiedlichen Codes für Uplink und Downlink.
 Verkabelte Netzwerke nutzen gewöhnlich einfach unterschiedliche Leitungen/Kabelstränge.
 
 %3.7
@@ -63,17 +63,21 @@ data rates or in the case of varying data rates. Now explain why traditional mob
 phone systems use fixed patterns, while computer networks generally use random
 patterns. In the future, the main data being transmitted will be computer-generated
 data. How will this fact change mobile phone systems?}
-Fairness, einfach zu implementieren. Feste Timeslots sind effektiver bei festen Datenraten, da weniger Overhead entsteht und keine Kapazität für die Reservierung von Time Slots verbraucht wird. Bei wechselnden Datenraten ist logischerweise DAMA-TDMA effektiver, da jede Station hier nur so viel Kapazität belegt wie sie braucht. Wenn bei fixed TDMA bspw. eine Station zeitweise nur wenig bis gar keine Daten sendet, werden ihre Time Slots verschwendet.
+\underline{Advantages of fixed TDM:} Fairness, einfach zu implementieren.
 
+\underline{Efficiency:} Feste Timeslots sind effektiver bei festen Datenraten, da weniger Overhead entsteht und keine Kapazität für die Reservierung von Time Slots verbraucht wird. Bei wechselnden Datenraten ist logischerweise DAMA-TDMA effektiver, da jede Station hier nur so viel Kapazität belegt wie sie braucht. Wenn bei fixed TDMA bspw. eine Station zeitweise nur wenig bis gar keine Daten sendet, werden ihre
+Time Slots verschwendet.
+
+\underline{Change due to computer-generated data:} \todo{TODO} package-oriented, more download than upload bandwith
 
 %3.8 
 \subsection{Explain the term interference in the space, time, frequency, and code domain. What
 are countermeasures in SDMA, TDMA, FDMA, and CDMA systems?}
 \begin{itemize}
 
-\item SDMA: Zwei Sender stehen zu nah beieinander. Guard space durch genügende Abstände zwischen den Antennen. 
+\item SDMA: Zwei Sender stehen zu nah beieinander und senden auf der gleichen Frequenz. Guard Space durch genügende große Abstände zwischen den Antennen.
 
-\item TDMA: das Signal einer Station kommt im falschen Slot an und trifft auf das Signal einer anderen Station. Guard Spaces in Form von Sendepausen zwischen den Slots, bessere Synchronisation.
+\item TDMA: das Signal einer Station kommt im falschen Slot an und trifft auf das Signal einer anderen Station. Guard Spaces in Form von Sendepausen zwischen den Slots, bessere Synchronisation, z.B. Time Advance bei GSM.
 
 \item FDMA: die Frequenzbänder von Stationen überlappen. Guard Spaces in Form von ungenutzten Frequenzen bzw. Frequency Reuse erst ab einer gewissen Entfernung bei Zellen, Frequency Hopping
 
@@ -85,19 +89,25 @@ are countermeasures in SDMA, TDMA, FDMA, and CDMA systems?}
 \subsection{Assume all stations can hear all other stations. One station wants to transmit and
 senses the carrier idle. Why can a collision still occur after the start of transmission?}
 Geschwindigkeit des Signals in der Luft begrenzt. Station beginnt also zu senden, doch bevor das Signal eine andere Station erreichen kann, checkt eine weitere Station das Medium, erkennt es als frei und sendet.
+Außerdem spielt die Geschwindigkeit der Hardware eine Rolle.
 
 %3.10 
 \subsection{What are benefits of reservation schemes? How are collisions avoided during data
 transmission, why is the probability of collisions lower compared to classical Aloha?
 What are disadvantages of reservation schemes?}
-Vorteile der Reservierung ist ein größtenteils Kollisionsfreier Datenaustausch. Durch die Reservierung kann eine Station je nach bedarf auch mehr Daten senden oder eben weniger. Es werden keine unnötigen Ressourcen wie Time Slots, Codes oder Frequenzen blockiert. Die ALOHA Phase in der wild gesendet wird ist vergleichsweise kurz. 
 
-Ein Nachteil der Reservierung ist der zusätzliche Overhead (Reservation Lists up to date halten etc.)
+\underline{Vorteile der Reservierung} ist ein größtenteils kollisionsfreier Datenaustausch. Durch die Reservierung kann eine Station je nach bedarf auch mehr Daten senden oder eben weniger. Es werden keine unnötigen Ressourcen wie Time Slots, Codes oder Frequenzen blockiert.
+
+\underline{Collision avoidance while data transmission:} Es wird nur der Zeitslot verwendet, den man für sich alleine reservieren konnte.
+
+\underline{Low collision probability:} Die ALOHA Phase in der wild gesendet wird ist vergleichsweise kurz.
+
+\underline{Nachteil der Reservierung} ist der zusätzliche Overhead (Reservation Lists up to date halten etc.)
 
 %3.11 
 \subsection{How can MACA still fail in case of hidden/exposed terminals? Think of mobile stations
 and changing transmission characteristics.}
-
+Wenn sich eine MS bewegt verändert sich möglicherweise, ob sie hidden/exposed ist und bekommt z.B: das CTS im hidden Fall nicht und wartet nicht damit zu senden, obwohl der Empfänger gerade von der hidden MS Daten gesendet bekommt.
 
 %3.12 
 \subsection{Which of the MAC schemes can give hard guarantees related to bandwidth and
@@ -116,8 +126,12 @@ countermeasures?}
 
 Signal + noise = -1,-1,0,-1,+2,-1
 
+$A_k = 010011$
+
 A beim Empfänger: +1-1+0+1+2-1 = 2 also 1
+
+$B_k = 110101$
 
 B beim Empfänger: -1-1+0-1-2-1 = -6 also 0
 
-Der Empfänger kann die Signale trotz des Noise decodieren. Bei einem zusätzlichen Near-Far Problem könnte bspw. das Signal von A und das Noise deutlich heftiger ausfallen, sodass das decodieren der Bits nicht mehr möglich ist. Um dies zu beheben könnten z.B. längere Keys für A und B verwendet werden.
+Der Empfänger kann die Signale trotz des Noise decodieren. Bei einem zusätzlichen Near-Far Problem könnte bspw. das Signal von A und das Noise deutlich heftiger ausfallen, sodass das decodieren der Bits nicht mehr möglich ist. Um dies zu beheben könnten z.B. längere Keys für A und B verwendet werden. Weitere Möglichkeit: Sendeleistung erhöhen.
