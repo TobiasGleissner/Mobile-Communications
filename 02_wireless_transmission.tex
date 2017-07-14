@@ -144,7 +144,8 @@ achieved? What replaces the guard space in Figure 2.31 when compared to Figure
 %guard space auf folie 2.34
 \underline{Guard spaces:} Wird durch orthogonale Chipping-Sequences ersetzt.
 
-\underline{Benefits from Multipathpropagation:} Offensichtlich nutzen DSSS Systeme sog. rake receivers (\todo{wie funktioniert das?}). Dadurch können sie leicht verschiedene Signale einfangen und zum Ausgangssignal rekombinieren.
+\underline{Benefits from Multipathpropagation:} Offensichtlich nutzen DSSS Systeme (weil CDMA) sog. rake receivers (\todo{wie funktioniert das?}). 
+Diese bestehen aus mehreren sub-recievern (sog. fingers), welche jeweils einem anderen Multipath-Pfad zugeordnet sind. Jeder dieser Finger dekodiert (durch channel estimation, also Schätzung der Verzögerung und Abschwächung des Signals auf dem jeweiligen Pfad) nun seine Multipath-Komponente, damit diese später zu einem möglichst akkuraten Signal zusammengefügt werden können. Dadurch können DSSS Systeme leichter verschiedene Signale einfangen und zum Ausgangssignal rekombinieren. Von einem tatsächlichen Vorteil zu sprechen ist jedoch vielleicht etwas übertrieben.
 
 
 %2.14
