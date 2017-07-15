@@ -19,9 +19,11 @@
 %4.2
 \subsection{What are the main problems when transmitting data using wireless systems that were made for voice transmission? What are the possible steps to mitigate the problems and to raise efficiency? How can this be supported by billing?}
 
-Sprachübertragung hat eine recht gleichmäßige Verteilung der Daten über die Zeit der Verbindung hinweg. Bei anderen Datenverbindungen wie z.B. Videotelefonie oder E-Mails werden variierende Datenmengen empfangen und versendet. Das führt im klassischen GSM zu einer Mischung aus Überlastung und ungenutzten Time Slots.
+\underline{Problems:} Sprachübertragung hat eine recht gleichmäßige Verteilung der Daten über die Zeit der Verbindung hinweg. Bei anderen Datenverbindungen wie z.B. E-Mails oder Websites werden variierende Datenmengen empfangen und versendet (Burst). Das führt im klassischen GSM zu einer Mischung aus Überlastung und ungenutzten Time Slots.
 
-Packet Switched Services (GPRS), welche freie Time Slots nutzen (bis zu 4), allerdings nur wenn diese wirklich benötigt werden.
+\underline{Mitigate problems:} Packet Switched Services (GPRS), welche freie Time Slots nutzen (bis zu 4), allerdings nur wenn diese wirklich benötigt werden.
+
+\underline{Billing support:} Pay per bytes/packet
 
 %4.3
 \subsection{Which types of different services does GSM offer? Name some examples and give reasons why these services have been separated.}
@@ -43,19 +45,25 @@ Kontrollsignale, Guard Spaces zwischen den TDMA Slots, Forward Error Correction 
 %4.5
 \subsection{Name the main elements of the GSM system architecture and describe their functions. What are the advantages of specifying not only the radio interface but also all internal interfaces of the GSM system?}
 \begin{itemize}
-\item Mobile Station ist das Terminal mit dem der Nutzer auf das GSM Netz zugreifen kann
+\item Mobile Station ist das Terminal mit dem der Nutzer auf das GSM Netz zugreifen kann (i.d.R. ein Handy)
 
-\item Base Station (BS Controller und B Transciever Station) sind die Zugriffspunkte des GSM Netzes zu denen sich die MS verbindet. Sie ist verantwortlich für Handover, Senden und Empfangen von Daten und dem zuweisen eines Channels und Time Slots.
+\item Base Transceiver Station sind die Zugriffspunkte des GSM Netzes zu denen sich die MS verbindet. Weisen Channels und Time Slots zu. Senden und Empfangen von Daten. Nehmen Messungen vor und leiten diese an den BSC.
 
-\item Mobile Services Switching Center steuert alle Verbindungen auf zugehörigen BSCs
+\item Base Station Controller  Sie ist verantwortlich für Handover, sofern dieser zwischen angeschlossenen BTS geschieht.
 
-\item Datenbanken (HLR, VLR) enthalten Daten aller Nutzer eines Providers/einer Gebietes und enthalten u.a. den letzten Aufenthaltsort, die Nummer, Vertragsinformationen
+\item Mobile Services Switching Center steuert alle Verbindungen auf zugehörigen BSCs, Handover bei mehr als einem involvierten BSC.
+
+\item Datenbank HLR Daten (Nummer, Vertragsinfo, Mapping auf VLR, ...) aller Nutzer eines einzelnen Providers
+
+ \item Datenbank VLR enthalten enthalten u.a. den letzten Aufenthaltsort aller Mobilfunkteilnehmer in einer Region, die bei dem Provider angemeldet sind
 
 \item Authentication Center für Identifizierung gegenüber dem Netz, Verschlüsselung
 
 \item Equipment Identity Register 
 
-\item Operation and Maintenance Center 
+\item Operation and Maintenance Center
+
+\item Gateway MSC Schnittstelle zum klassischen IDSN Netz
 \end{itemize}
 
 Spezifikation bedeutet auch immer mehr Kompatibilität. Hardware von verschiedenen Herstellern kann genutzt werden. Geringere Abhängigkeit.
@@ -64,18 +72,16 @@ Spezifikation bedeutet auch immer mehr Kompatibilität. Hardware von verschieden
 %4.6
 \subsection{Describe the functions of the MS and SIM. Why does GSM separate the MS and SIM? How and where is user-related data represented/stored in the GSM system? How is user data protected from unauthorised access, especially over the air interface? How could the position of an MS (not only the current BTS) be localised? Think of the MS reports regarding signal quality.}
 
-Die MS ist zuständig für alle Funkfunktionen und Nutzerdienste.
-Die SIM enthält die zur Identifikation gegenüber des Authentication Centers notwendigen Nutzeparameter und ist für die Identifikation gegenüber dem Netz zuständig.
+\underline{Functions of MS and SIM:} Die MS ist zuständig für alle Funkfunktionen und Nutzerdienste.
+Die SIM enthält die zur Identifikation/Challengeresponse gegenüber des Authentication Centers notwendigen Nutzeparameter und ist für die Identifikation gegenüber dem Netz zuständig.
 
+\underline{Separation of MS and SIM:} MS und SIM sind getrennt bzw. trennbar, da zur Einführung von GSM die eSIM noch keine Option war und vermutlich niemand Lust gehabt hätte bei jedem Providerwechsel ein neues Telefon zu erwerben oder wahlweise die Provider keine Lost hatten mit jedem neuen Telefon eines Nutzers eine neue SIM auszustellen. Also Erhöhung der Benutzbarkeit.
 
-MS und SIM sind getrennt bzw. trennbar, da zur Einführung von GSM die eSIM noch keine Option war und vermutlich niemand Lust gehabt hätte bei jedem Providerwechsel ein neues Telefon zu erwerben oder wahlweise die Provider keine Lost hatten mit jedem neuen Telefon eines Nutzers eine neue SIM auszustellen. Also Erhöhung der Benutzbarkeit.
+\underline{where is user-related data:} HLR + VLR + AuthCenter + SIM(id+private key)
 
+\underline{data protection:} Die Datenübertragung zwischen der MS und der BTS ist mit einem cipher Key verschlüsselt. Dieser wird mithilfe des individuellen Nutzer authentication keys in der SIM Karte und dem Algorithmus A8 generiert. Die Verschlüsselung läuft dann über den Algorithmus A5. Ein "Abhöhrer" müsste also den besagten Nutzer key kennen um die Unterhaltung verstehen zu können. Dieser ist jedoch nur dem Provider (also dem AC) und der SIM bekannt. (idealerweise, man weiß ja nie...) Authentifizierung mit A3
 
-Die Datenübertragung zwischen der MS und der BTS ist mit einem cipher Key verschlüsselt. Dieser wird mithilfe des individuellen Nutzer authentication keys in der SIM Karte und dem Algorithmus A8 generiert. Die Verschlüsselung läuft dann über den Algorithmus A5. Ein "Abhöhrer" müsste also den besagten Nutzer key kennen um die Unterhaltung verstehen zu können. Dieser ist jedoch nur dem Provider (also dem AC) und der SIM bekannt. (idealerweise, man weiß ja nie...)
-
-Der measurement report der MS enthält alle BTS's, welche die MS empfangen kann und die zugehörige Signalstärke/-qualität. Aus diesen Informationen kann der ungefähre Abstand zu den BTS's ermittelt werden und, wenn genügend Antennen in der Region stehen, die Position der MS stark eingegrenzt werden.
-
-
+\underline{Position of MS:} Der measurement report der MS enthält alle BTS's, welche die MS empfangen kann und die zugehörige Signalstärke/-qualität. Aus diesen Informationen kann der ungefähre Abstand zu den BTS's ermittelt werden und, wenn genügend Antennen in der Region stehen, die Position der MS stark eingegrenzt werden.
 
 %4.7
 \subsection{Looking at the HLR/VLR database approach used in GSM—how does this architecture limit the scalability in terms of users, especially moving users?}
@@ -88,21 +94,21 @@ Bei vielen bewegten Nutzern müssen viele Einträge von VLR zu VLR und von VLR z
 
 HSCSD is still circuit switched and just utilizes more than one slot per user, so only the software has to change. 
 
-GPRS is packet switched and therefor needs Hardware to handle Packet Transmission (Routers).
+GPRS is packet switched and therefore needs new hardware to handle Packet Transmission (Routers).
 New components are:
 \begin{itemize}
 
-\item GGSN (Gateway GPRS Support Node) which is the interworking unit between GPRS and a PDN
+\item GGSN (Gateway GPRS Support Node) which is the interworking unit between GPRS and a PDN (works like a router) (usually includes a NAT)
 
-\item SGSN (Serving GSN) which is communicating with the MS in terms of location and billing
+\item SGSN (Serving GSN) which is communicating with the MS in terms of location, billing, security
 
-\item GR (GPRS Register) which contains the user addresses
+\item GR (GPRS Register) which contains the IP addresses
 \end{itemize}
 
 %4.9
 \subsection{What are the limitations of a GSM cell in terms of diameter and capacity (voice, data) for the traditional GSM, HSCSD, GPRS? How can the capacity be increased?}
 
-GSM-Zellen können eine Größe von bis zu 35km umfassen. Die Kapazität ist begrenzt durch die Anzahl der verfügbaren Frequenzen und Time Slots. Sind diese gefüllt, werden keinen neuen Nutzer mehr aufgenommen.
+GSM-Zellen können eine Größe von bis zu 35km umfassen. Grund: Time Advance Field 6bit. Die Kapazität ist begrenzt durch die Anzahl der verfügbaren Frequenzen und Time Slots. Sind diese gefüllt, werden keinen neuen Nutzer mehr aufgenommen. GSM
 
 Datarates:
 
@@ -114,19 +120,24 @@ Datarates:
 \item GPRS: 171.2 kbit/s mit 8 slots und coding scheme CS-4
 \end{itemize}
 
-Mit EDGE erreicht GSM bis zu 384 kbit/s durch andere Modulation
+%Mit EDGE erreicht GSM bis zu 384 kbit/s durch andere Modulation
+\underline{increase capacity:} Weniger Redundanz einbauen
 
 %4.10
 \subsection{What multiplexing schemes are used in GSM for what purposes? Think also of other layers apart from the physical layer.}
 
-SDM in Hinblick auf die Zellen, FDM für den Duplex und Trennung der Channels, TDM für den Zurgiff in den einzelnen Channels (Trennung der User)
+SDM in Hinblick auf die Zellen
+
+FDM für den Duplex und Trennung der Channels, imbesonderen für die Trennung Uplinks/Downlinks
+
+TDM für den Zurgiff in den einzelnen Channels (Trennung der User)
 
 %4.11
 \subsection{How is synchronisation achieved in GSM? Who is responsible for synchronisation and why is synchronisation very important?}
 
-Die Synchronisation läuft zwischen BSC und MS ab indem die BS in regelmäßigen Abständen Time Slots bereithält und jeder MS einen solchen zuweist. Nur dann darf gesendet werden.
+Die Synchronisation läuft zwischen BTS und MS ab indem die BTS auf einem Channel eine Clock sendet. (Synchronisation des Delays)
 
-Synchronisation ist wichtig, da sonst die Time Slots von den sich bewegenden MS regelmäßig verpasst werden würden, da das Signal plötzlich länger oder kürzer bis zur BS braucht. Es muss also dementsprechend angepasst früher oder später gesendet werden. Dies wird nur durch gute Synchronisation möglich. (Sync in der MS)
+Synchronisation ist wichtig, da sonst die Time Slots von den sich bewegenden MS regelmäßig verpasst werden würden, da das Signal plötzlich länger oder kürzer bis zur BTS braucht. Es muss also dementsprechend angepasst früher oder später gesendet werden. Dies wird nur durch gute Synchronisation möglich. (Sync in der MS)
 Die Time Slots von der BS werden zur Trennung der Nutzer benötigt.
 
 %4.12
@@ -134,7 +145,7 @@ Die Time Slots von der BS werden zur Trennung der Nutzer benötigt.
 
 %4.13
 \subsection{Where and when can collisions occur while accessing the GSM system? Compare possible collisions caused by data transmission in standard GSM, HSCSD, and GPRS.}
-Beim Verbinden mit der BS muss zum reservieren der Time Slots slotted Aloha auf dem RACH verwendet werden. Hierbei kann es zu Kollisionen kommen. Die eigentliche Datenübertragung läuft dann üblicherweise kollisionsfrei ab, außer es kommt zu außergewöhnlichen Ereignissen, wie einem fiesen jamming Angrif eines anderen Nutzers.
+Beim Verbinden mit der BTS muss zum reservieren eines Channels (TimeSlot+Frequenz) slotted Aloha auf dem RACH (Random Access CHannel) verwendet werden. Hierbei kann es zu Kollisionen kommen. Die eigentliche Datenübertragung läuft dann üblicherweise kollisionsfrei ab, außer es kommt zu außergewöhnlichen Ereignissen, wie einem fiesen jamming Angrif eines anderen Nutzers.
 
 Bei HSCSD kann es zusätzlich noch zu Problemen beim Handover kommen, wenn auf der neuen BS keine 2 (3,4) Slots reserviert werden können. Jedoch wird dann vermutlich einfach die Verbindung abgelehnt, also keine Kollision. 
 
@@ -150,15 +161,16 @@ Bei HSCSD kann es zusätzlich noch zu Problemen beim Handover kommen, wenn auf d
 
 %4.15
 \subsection{How is localisation, location update, roaming, etc. done in GSM and reflected in the data bases? What are typical roaming scenarios?}
-Lokalisierung ist nur dann möglich, wenn sich der Teilnehmer regelmäßig mit seiner MS im Netz einbucht. Sobald er dies tut, wird das verantwortliche VLR informiert und der Nutzer wird dort eingetragen. Das HLR des Teilnehmers wird über den neuen Standort in Kenntnis gesetzt (Location update).
+Lokalisierung ist nur dann möglich, wenn sich der Teilnehmer regelmäßig mit seiner MS im Netz einbucht/meldet. Sobald er dies tut, wird das verantwortliche, regionale VLR des Providers, mit dem er momentan verbunden ist, informiert und der Nutzer wird dort eingetragen. Das HLR des Teilnehmers wird über den neuen Standort in Kenntnis gesetzt (Location update).
 
 
 Location Update Ablauf:
 
+\todo{Das location update macht doch der MSC, oder?. Wenn die MS das machen würde, müsste sie von allen Providern auf der Welt alle Funkzellen und ihre Location Area kennen}
 \begin{itemize}
 \item MS bemerkt, dass seine neue Zelle sich in einer anderen Location Area gehört.
 \item Der BSC empfängt eine Location Update Message von der MS und leitet diese weiter zum MSC.
-\item MSC bemerkt, dass die alte LA der MS zu einem anderen MSC gehört und fragt das alte VLR nach der IMSI des Teilnehmers und trägt diese in ihre Datenbank ein.
+\item MSC bemerkt, dass die alte LA (Location Area) der MS zu einem anderen MSC gehört und fragt das alte VLR nach der IMSI des Teilnehmers und trägt diese in ihre Datenbank ein.
 \item Das MSC sendet eine Update Location Message an das HLR des Teilnehmers. 
 \item HLR trägt den neuen Aufenthaltsort des Teilnehmers ein und sendet dem neuen MSC Informationen über den Teilnehmer, wie den zugehörigen Key, random Challenge und die SRES für die Verschlüsselung und Authentifizierung.
 \item Die alte MSC löscht die Daten im VLR.
@@ -172,35 +184,32 @@ National roaming, international roaming. Beides Wechsel des Provider Netzes.
 
 
 %4.16
-\subsection{Why are so many different identifiers/addresses (e.g., MSISDN, TMSI, IMSI) needed in GSM? Give reasons and distinguish between user related and system related identifiers.}
+\subsection{Why are so many different identifiers/addresses (e.g. MSISDN, TMSI, IMSI) needed in GSM? Give reasons and distinguish between user related and system related identifiers.}
 \begin{itemize}
 \item MSISDN ist die Nummer, die einer SIM-Karte zugeordnet wird und die man auf seinem Handy wählt um einen Nutzer zu erreichen. Über diese Nummer wird der Teilnehmer einem HLR, bzw. einem Provider zugeordnet.
 
-\item TMSI (Temporary Mobile Subscriber Identity) erhält die MS vom aktuellen VLR und gilt nur in der aktuellen LA. Sie wird genutzt um einen Nutzer "anzu-pagen", wenn dieser angerufen wird.
+\item TMSI (Temporary Mobile Subscriber Identity) erhält die MS vom aktuellen VLR und gilt nur in der aktuellen LA. Sie wird genutzt um einen Nutzer eine Paging-Nachricht zu senden, wenn dieser angerufen wird. Da sie temporär ist, wird das Anlegen von Bewegungsprofilen erschwert.
 
-\item IMSI ist die globale Identifikationsnummer über die der Teilnehmer im Netz einer HLR zugeordnet und kann so im HLR gefunden werden. Um tracking eines Nutzers zu erschweren wird diese Nummer möglichst selten versendet und meist durch die TMSI ersetzt.
+\item IMSI ist die globale Identifikationsnummer, u.a. auf der SIM gespeichert, über die der Teilnehmer im Netz einer HLR zugeordnet und kann so im HLR gefunden werden. Um tracking eines Nutzers zu erschweren wird diese Nummer möglichst selten versendet und meist durch die TMSI ersetzt. IMSI hat nichts mit der Mobilfunknummer zu tun.
 
 \end{itemize}
 
 
 %4.17
 \subsection{Give reasons for a handover in GSM and the problems associated with it. Which are the typical steps for handover, what types of handover can occur? Which resources need to be allocated during handover for data transmission using HSCSD or GPRS respectively? What about QoS guarantees?}
-Wir bewegen uns von unserer aktuellen Antenne weg und hin zu einer anderen. Dadurch wird das Signal der alten BTS immer schwächer und das der Neuen immer stärker.
+Wir bewegen uns von unserer aktuellen BTS weg und hin zu einer anderen. Dadurch wird das Signal der alten BTS immer schwächer und das der Neuen immer stärker.
 
-
-Probleme ergeben sich, wenn ein Nutzer mehrere BTS gleich stark empfängt und somit ständig HO notwendig werden und dadurch die Verbind sehr schlecht wird. Dies wird dadurch verhindert, dass ein HO nur dann eingeleitet wird, sobald eine Gewisse Grenze der Signalstärke erreicht ist.
-
+Probleme ergeben sich, wenn ein Nutzer mehrere BTS etwa gleich stark empfängt (z.B. durch hin- und herbewegen) und somit ständig HO notwendig werden und dadurch die Verbindung sehr schlecht wird. Dies wird dadurch verhindert, dass ein HO nur dann eingeleitet wird, sobald eine gewisse Differenz der Signalstärke erreicht ist.
 
 Handover Steps see figure 4.45
 
-
-Types of HO: Channel change, BTS change, BSC change, MSC change
+Types of HO: Channel change within cell, BTS change, BSC change, MSC change
 
 %4.18
 \subsection{What are the functions of authentication and encryption in GSM? How is system security maintained?}
-Authentifizierung erfolgt zwischen der SIM und dem AC. Hierbei wird zunächst eine Zufallsnummer vom AC an die SIM gesendet. Beide Seiten führen nun den Algorithmus A3 mit dieser Nummer und dem individuellen Teilnehmer Key aus und senden das Ergebnis in Form einer SRES Nachricht an das verbundene MSC. Hier werden die Ergebnisse verglichen. Stimme diese überein, war die Authentifizierung erfolgreich.
+Authentifizierung erfolgt zwischen der SIM und dem AUC. Hierbei wird zunächst eine Zufallsnummer vom AC an die SIM gesendet. Beide Seiten führen nun den Algorithmus A3 mit dieser Nummer und dem individuellen Teilnehmer Key aus und senden das Ergebnis in Form einer SRES Nachricht an das verbundene MSC. Hier werden die Ergebnisse verglichen. Stimmen diese überein, war die Authentifizierung erfolgreich.
 
-Verschlüsselung läuft ähnlich ab. Auch hier wird eine Zufallsnummer ausgetauscht und aus ihr und dem Teilnehmer Key mit dem A8 Algorithmus der cipher Key errechnet und vom AC an die BSS gesendet. Diese verschlüsselt dann die Nutzerdaten mit diesem Key und dem Algorithmus A5. Die Mobile Station tut das selbe auf der anderen Seite mit dem Key der von der SIM errechnet wurde.
+Verschlüsselung läuft ähnlich ab. Auch hier wird eine Zufallsnummer ausgetauscht und aus ihr und dem Teilnehmer Key mit dem A8 Algorithmus der cipher Key errechnet und vom AUC an das BSS gesendet. Diese verschlüsselt dann die Nutzerdaten mit diesem Key und dem Algorithmus A5. Die MS tut das selbe auf der anderen Seite mit dem Key der von der SIM errechnet wurde.
 
 Keine Ende-zu-Ende Verschlüsselung 
 
@@ -210,9 +219,11 @@ Klassisches GSM is 9.6 kbit/s, 14.4 kbit/s mit weniger FEC
 
 HSCSD nutzt mehrere Slots um die Datenrate zu erhöhen.
 
-GPRS nutzt bis zu 8 time-slots und bietet 4 verschiedene Coding Schemes (CS-1 bis CS-4)
+GPRS nutzt bis zu 8 time-slots und bietet 4 verschiedene Coding Schemes (CS-1 bis CS-4). Die Coding schemes vewenden unterschiedlich viel Forward Error Correction.
 
-EDGE nutzt eine andere Modulation(PSK) in addition to GMSK, which offers even higher data rates under good propagation conditions. 
+EDGE nutzt eine andere Modulation(PSK) in addition to GMSK, which offers even higher data rates under good propagation conditions.
+
+\underline{verbleibende Probleme:} Interferenzen \todo{todo}
 
 
 %4.20
@@ -224,40 +235,45 @@ Alte Handy können die Codes von GPRS nicht und können nicht senden und empfang
 
 %4.22
 \subsection{How much of the original GSM network does GPRS need? Which elements of the network perform the data transfer?}
-GPRS nutzt das GSM-Netz für die Authentifizierung, benötigt also das OSS und die LRs. 
+GPRS nutzt das GSM-Netz für die Authentifizierung, benötigt also das OSS (Operation Subsystem) und HLR/VLR.
 
 %4.23
 \subsection{What are typical data rates in DECT? How are they achieved considering the TDMA frames? What multiplexing schemes are applied in DECT for what purposes? Compare the complexity of DECT with that of GSM.}
 
 %4.24
 \subsection{Who would be the typical users of a trunked radio system? What makes trunked radio systems particularly attractive for these user groups? What are the main differences to existing systems for that purpose? Why are trunked radio systems cheaper compared to, e.g., GSM systems for their main purposes?}
-Feuerwehr, Polizei, Militär, Hilfsorganisationen in Krisengebieten.
+\underline{Users:} Feuerwehr, Polizei, Militär, Hilfsorganisationen in Krisengebieten.
 
-Ad-Hoc networking, verlässliche/robuste Verbindung. Es kann in eine Krisengebiet schnell das eigene Netz aufgestellt werden. Die Verschlüsselung (ende zu ende)ist besser, also bessere Sicherheit. 
+\underline{Vorteile:} Ad-Hoc networking in verschiedensten Modi, verlässliche/robuste Verbindung. Es kann in eine Krisengebiet schnell das eigene Netz aufgestellt werden. Die Verschlüsselung (ende zu ende) ist besser, also höhere Sicherheit.
 
-Der größte Unterschied von TETRA zu GSM oder ähnlichem ist der Direct Mode, der eine ad-hoc Verbindung zwischen den Terminals erlaubt. Es muss also keine Infrastruktur vorhanden sein, solange die Geräte in Reichweite sind. Diese kann auch durch den Einsatz von (mobilen) Repeatern vergrößert werden.
+\underline{Unterschiede und Kosten:} Der größte Unterschied von TETRA zu GSM oder ähnlichem ist der Direct Mode, der eine ad-hoc Verbindung zwischen den Terminals erlaubt. Es muss also keine Infrastruktur vorhanden sein, solange die Geräte in Reichweite sind. Diese kann auch durch den Einsatz von (mobilen) Repeatern vergrößert werden.
 
 %4.25
 \subsection{Summarise the main features of 3rd generation mobile phone systems. How do they achieve higher capacities and higher data rates? How does UMTS implement asymmetrical communication and different data rates?}
 Nutzen CDMA statt TDMA, sehr viel höhere Datenraten (bis zu 2 Mbit/s urban) und sind packet-switched.
 
-Höhere Kapazitäten durch CDMA, da hier alle Nutzer auf einer Frequenz senden können und nur durch die verschiedenen Codes auseinander gehalten werden. 
+\underline{Main features:} Höhere Kapazitäten durch CDMA, da hier alle Nutzer auf einer Frequenz senden können und durch die verschiedenen Codes auseinander gehalten werden.
 
-Verschiedene Datenraten durch variierende Spreading-Faktoren. Je höher die Datenrate desto weniger Chips pro Bit. Dadurch wird eine konstante Chippingrate von 3.84 Mchip/s gewährleistet. 
+\underline{Höhere/verschiedene Datenraten:} Verschiedene Datenraten durch variierende Spreading-Faktoren. Je höher die Datenrate desto weniger Chips pro Bit. Dadurch wird eine konstante Chippingrate von 3.84 Mchip/s gewährleistet.
 
 %4.26
 \subsection{Compare the current situation of mobile phone networks in Europe, Japan, China, and North America. What are the main differences, what are efforts to find a common system or at least interoperable systems?}
+Leichte unterschiede im Frequenzbereich von GSM, LTE wird von allen, jedoch auf untershiedlichen Frequenzen benutzt, 5G soll es irgendwann überall geben.
 
 %4.27
 \subsection{What disadvantage does OVSF have with respect to flexible data rates? How does UMTS offer different data rates (distinguish between FDD and TDD mode)?}
-Es können weniger Streams mit hohen Datenraten laufen, da schon bei zwei Streams mit Spreading-Faktor 2 der gesamte Coding-Tree blockiert ist.
+OVSF means Orthogonal Variable Spreading Factor
+
+Es können weniger Streams mit hohen Datenraten laufen, da schon bei zwei Streams mit Spreading-Faktor 2 der gesamte Coding-Tree blockiert ist. Man muss im schlimmsten Fall einen größeren Spreading-Faktor nehmen und den Datenstrom z.B. durch anderes Encoding bei Audio/Video anpassen.
+
+Bei UMTS gibt es FDD, d.h. getrennte Upload/Download Frequenzbereiche. Time Slots werden lediglich zur Synchronisation verwendet und nicht zum Treffen der Benutzer.
 
 %4.28
 \subsection{How are different DPDCHs from different UEs within one cell distinguished in UTRA FDD?}
 
 %4.29
 \subsection{Which components can perform combining/splitting at what handover situation? What is the role of the interface Iur? Why can CDMA systems offer soft handover?}
-Combining/Splitting ist Aufgabe der RNCs oder Node Bs, damit das CN nicht davon verwirrt wird.
+Combining/Splitting ist Aufgabe der RNS (Radio Network Subsystem) oder Node Bs, damit das CN (Core Network) nicht davon verwirrt wird.
 
 Findet der Handover zwischen zwei Antennen des selben Node Bs oder zwischen zwei NodeBs desselben RNCs statt sind die NodeBs für das Splitting/Combining zuständig. Sonst die RNCs.
 
